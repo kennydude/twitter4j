@@ -30,4 +30,6 @@ public interface Place extends TwitterResponse, Comparable<Place>, java.io.Seria
     GeoLocation[][] getGeometryCoordinates();
 
     Place[] getContainedWithIn();
+    
+    String[] getPolylines();
 }

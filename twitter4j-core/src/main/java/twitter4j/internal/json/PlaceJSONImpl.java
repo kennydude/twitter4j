@@ -49,6 +49,7 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place, java.io.
     private String geometryType;
     private GeoLocation[][] geometryCoordinates;
     private Place[] containedWithIn;
+    private String[] polylines;
     private static final long serialVersionUID = -2873364341474633812L;
 
     /*package*/ PlaceJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
@@ -128,9 +129,20 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place, java.io.
             } else {
                 containedWithIn = null;
             }
+            if(!json.isNull("polylines")) {
+            	JSONArray lines = json.getJSONArray("polylines");
+            	polylines = new String[lines.length()];
+            	for(int i=0;i<lines.length();i++){
+            		polylines[i] = lines.getString(i);
+            	}
+            }
         } catch (JSONException jsone) {
             throw new TwitterException(jsone.getMessage() + ":" + json.toString(), jsone);
         }
+    }
+    
+    public String[] getPolylines(){
+    	return this.polylines;
     }
 
     public int compareTo(Place that) {
