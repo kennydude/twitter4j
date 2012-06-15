@@ -22,7 +22,7 @@ import twitter4j.internal.util.z_T4JInternalStringUtil;
 
 import javax.crypto.spec.SecretKeySpec;
 
-abstract class OAuthToken implements java.io.Serializable {
+public abstract class OAuthToken implements java.io.Serializable {
 
     private static final long serialVersionUID = 3891133932519746686L;
     private String token;
