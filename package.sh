@@ -18,7 +18,6 @@ sed -i '' "s/-SNAPSHOT\";/-SNAPSHOT\(build: $HASH\)\";/g" twitter4j-async/src/ma
 sed -i '' "s/-SNAPSHOT\";/-SNAPSHOT\(build: $HASH\)\";/g" twitter4j-appengine/src/main/java/twitter4j/VersionAppEngine.java
 sed -i '' "s/-SNAPSHOT\";/-SNAPSHOT\(build: $HASH\)\";/g" twitter4j-stream/src/main/java/twitter4j/VersionStream.java
 
-rm -Rf .git
 rm -Rf target
 
 if [ -n "$2" ];
