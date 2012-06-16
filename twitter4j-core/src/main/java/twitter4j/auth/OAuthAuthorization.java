@@ -185,7 +185,11 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
     /**
      * {@inheritDoc}
      */
-    public void setOAuthAccessToken(OAuthToken accessToken) {
+    public void setOAuthAccessToken(AccessToken accessToken) {
+        this.oauthToken = accessToken;
+    }
+
+    public void setAccessToken(OAuthToken accessToken){
         this.oauthToken = accessToken;
     }
 
