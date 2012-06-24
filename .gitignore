@@ -30,3 +30,7 @@ atlassian-ide-plugin.xml
 *.ipr
 *.iws
 .idea/*
+
+# @kennydude extras
+twitter4j-build
+twitter4j-*.jar
