@@ -327,6 +327,9 @@ public final class StatusJSONImpl extends TwitterResponseImpl implements Status,
         return isFavorited;
     }
 
+    public void setIsFavorited(boolean favorited) {
+        isFavorited = favorited;
+    }
 
     private User user = null;
 
