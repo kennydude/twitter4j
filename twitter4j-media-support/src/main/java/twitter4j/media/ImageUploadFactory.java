@@ -120,9 +120,11 @@ public class ImageUploadFactory {
         OAuthAuthorization oauth = (OAuthAuthorization) authorization;
         if (mediaProvider == TWITTER) {
             return new TwitterUpload(conf, oauth);
-        }else if (mediaProvider == IMG_LY) {
-                return new ImgLyUpload(conf, oauth);
+        } else if (mediaProvider == IMG_LY) {
+            return new ImgLyUpload(conf, oauth);
         } else if (mediaProvider == PLIXI) {
+            return new PlixiUpload(conf, apiKey, oauth);
+        } else if (mediaProvider == LOCKERZ) {
             return new PlixiUpload(conf, apiKey, oauth);
         } else if (mediaProvider == TWIPPLE) {
             return new TwippleUpload(conf, oauth);

@@ -28,9 +28,7 @@ import twitter4j.internal.org.json.JSONObject;
 
 import java.util.Date;
 
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
+import static twitter4j.internal.util.z_T4JInternalParseUtil.*;
 
 /**
  * A data class representing sent/received direct message.
@@ -81,6 +79,7 @@ public final class DirectMessageJSONImpl extends TwitterResponseImpl implements 
     /**
      * {@inheritDoc}
      */
+    @Override
     public long getId() {
         return id;
     }
@@ -88,6 +87,7 @@ public final class DirectMessageJSONImpl extends TwitterResponseImpl implements 
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getText() {
         return text;
     }
@@ -95,6 +95,7 @@ public final class DirectMessageJSONImpl extends TwitterResponseImpl implements 
     /**
      * {@inheritDoc}
      */
+    @Override
     public long getSenderId() {
         return senderId;
     }
@@ -102,6 +103,7 @@ public final class DirectMessageJSONImpl extends TwitterResponseImpl implements 
     /**
      * {@inheritDoc}
      */
+    @Override
     public long getRecipientId() {
         return recipientId;
     }
@@ -109,6 +111,7 @@ public final class DirectMessageJSONImpl extends TwitterResponseImpl implements 
     /**
      * {@inheritDoc}
      */
+    @Override
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -116,6 +119,7 @@ public final class DirectMessageJSONImpl extends TwitterResponseImpl implements 
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getSenderScreenName() {
         return senderScreenName;
     }
@@ -123,6 +127,7 @@ public final class DirectMessageJSONImpl extends TwitterResponseImpl implements 
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getRecipientScreenName() {
         return recipientScreenName;
     }
@@ -132,6 +137,7 @@ public final class DirectMessageJSONImpl extends TwitterResponseImpl implements 
     /**
      * {@inheritDoc}
      */
+    @Override
     public User getSender() {
         return sender;
     }
@@ -141,6 +147,7 @@ public final class DirectMessageJSONImpl extends TwitterResponseImpl implements 
     /**
      * {@inheritDoc}
      */
+    @Override
     public User getRecipient() {
         return recipient;
     }

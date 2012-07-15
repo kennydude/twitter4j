@@ -39,7 +39,7 @@ public class InvocationStatisticsCalculator implements InvocationStatistics {
         times = new long[historySize];
     }
 
-    public void increment(long time, boolean success) {
+    void increment(long time, boolean success) {
         callCount++;
         errorCount += success ? 0 : 1;
         totalTime += time;
@@ -50,22 +50,27 @@ public class InvocationStatisticsCalculator implements InvocationStatistics {
             index = 0;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public long getCallCount() {
         return callCount;
     }
 
+    @Override
     public long getErrorCount() {
         return errorCount;
     }
 
+    @Override
     public long getTotalTime() {
         return totalTime;
     }
 
+    @Override
     public synchronized long getAverageTime() {
         int stopIndex = Math.min(Math.abs((int) callCount), times.length);
         if (stopIndex == 0) {
@@ -80,6 +85,7 @@ public class InvocationStatisticsCalculator implements InvocationStatistics {
         return totalTime / stopIndex;
     }
 
+    @Override
     public synchronized void reset() {
         callCount = 0;
         errorCount = 0;
@@ -91,7 +97,7 @@ public class InvocationStatisticsCalculator implements InvocationStatistics {
     @Override
     public String toString() {
         // StringBuilder is faster... do we still need to support JDK 1.4?
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("calls=").append(getCallCount()).append(",")
                 .append("errors=").append(getErrorCount()).append(",")
                 .append("totalTime=").append(getTotalTime()).append(",")

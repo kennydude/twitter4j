@@ -16,10 +16,6 @@
 
 package twitter4j;
 
-import java.io.ObjectStreamException;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.7
@@ -27,60 +23,12 @@ import java.util.Map;
 public interface ProfileImage extends TwitterResponse, java.io.Serializable {
     String getURL();
 
-    ImageSize BIGGER = new ImageSize("bigger");
-    ImageSize NORMAL = new ImageSize("normal");
-    ImageSize MINI = new ImageSize("mini");
-    ImageSize ORIGINAL = new ImageSize("original");
+    ImageSize BIGGER = ImageSize.bigger;
+    ImageSize NORMAL = ImageSize.normal;
+    ImageSize MINI = ImageSize.mini;
+    ImageSize ORIGINAL = ImageSize.original;
 
-    static class ImageSize implements java.io.Serializable {
-
-        private static final Map<String, ImageSize> instances = new HashMap<String, ImageSize>();
-
-        private static final long serialVersionUID = 3363026523372848987L;
-
-        private final String name;
-
-        private ImageSize() {
-            throw new AssertionError();
-        }
-
-        private ImageSize(String name) {
-            this.name = name;
-            instances.put(name, this);
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            ImageSize imageSize = (ImageSize) o;
-
-            if (!name.equals(imageSize.name)) return false;
-
-            return true;
-        }
-
-        @Override
-        public int hashCode() {
-            return name.hashCode();
-        }
-
-        @Override
-        public String toString() {
-            return name;
-        }
-
-        private static ImageSize getInstance(String name) {
-            return instances.get(name);
-        }
-
-        private Object readResolve() throws ObjectStreamException {
-            return getInstance(name);
-        }
+    enum ImageSize {
+        bigger, normal, mini, original
     }
 }

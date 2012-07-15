@@ -31,11 +31,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
@@ -71,6 +67,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
     }
 
     // implementations for Authorization
+    @Override
     public String getAuthorizationHeader(HttpRequest req) {
         return generateAuthorizationHeader(req.getMethod().name(), req.getURL(), req.getParameters(), oauthToken);
     }
@@ -84,6 +81,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
     /**
      * #{inheritDoc}
      */
+    @Override
     public boolean isEnabled() {
         return oauthToken != null && oauthToken instanceof AccessToken;
     }
@@ -93,6 +91,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
     /**
      * {@inheritDoc}
      */
+    @Override
     public RequestToken getOAuthRequestToken() throws TwitterException {
         return getOAuthRequestToken(null, null);
     }
@@ -100,6 +99,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
     /**
      * {@inheritDoc}
      */
+    @Override
     public RequestToken getOAuthRequestToken(String callbackURL) throws TwitterException {
         return getOAuthRequestToken(callbackURL, null);
     }
@@ -107,6 +107,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
     /**
      * {@inheritDoc}
      */
+    @Override
     public RequestToken getOAuthRequestToken(String callbackURL, String xAuthAccessType) throws TwitterException {
         if (oauthToken instanceof AccessToken) {
             throw new IllegalStateException("Access token already available.");
@@ -125,6 +126,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
     /**
      * {@inheritDoc}
      */
+    @Override
     public AccessToken getOAuthAccessToken() throws TwitterException {
         ensureTokenIsAvailable();
         if (oauthToken instanceof AccessToken) {
@@ -137,6 +139,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
     /**
      * {@inheritDoc}
      */
+    @Override
     public AccessToken getOAuthAccessToken(String oauthVerifier) throws TwitterException {
         ensureTokenIsAvailable();
         oauthToken = new AccessToken(http.post(conf.getOAuthAccessTokenURL()
@@ -147,6 +150,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
     /**
      * {@inheritDoc}
      */
+    @Override
     public AccessToken getOAuthAccessToken(RequestToken requestToken) throws TwitterException {
         this.oauthToken = requestToken;
         return getOAuthAccessToken();
@@ -155,6 +159,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
     /**
      * {@inheritDoc}
      */
+    @Override
     public AccessToken getOAuthAccessToken(RequestToken requestToken, String oauthVerifier) throws TwitterException {
         this.oauthToken = requestToken;
         return getOAuthAccessToken(oauthVerifier);
@@ -163,6 +168,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
     /**
      * {@inheritDoc}
      */
+    @Override
     public AccessToken getOAuthAccessToken(String screenName, String password) throws TwitterException {
         try {
             String url = conf.getOAuthAccessTokenURL();
@@ -185,6 +191,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setOAuthAccessToken(AccessToken accessToken) {
         this.oauthToken = accessToken;
     }
@@ -223,7 +230,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
             signatureBaseParams.addAll(toParamList(params));
         }
         parseGetParameters(url, signatureBaseParams);
-        StringBuffer base = new StringBuffer(method).append("&")
+        StringBuilder base = new StringBuilder(method).append("&")
                 .append(HttpParameter.encode(constructRequestURL(url))).append("&");
         base.append(HttpParameter.encode(normalizeRequestParameters(signatureBaseParams)));
         String oauthBaseString = base.toString();
@@ -295,7 +302,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
         signatureBaseParams.addAll(oauthHeaderParams);
         parseGetParameters(url, signatureBaseParams);
 
-        StringBuffer base = new StringBuffer(method).append("&")
+        StringBuilder base = new StringBuilder(method).append("&")
                 .append(HttpParameter.encode(constructRequestURL(url))).append("&");
         base.append(HttpParameter.encode(normalizeRequestParameters(signatureBaseParams)));
 
@@ -369,21 +376,21 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
      * @return normalized and concatenated parameters
      * @see <a href="http://oauth.net/core/1.0#rfc.section.9.1.1">OAuth Core - 9.1.1.  Normalize Request Parameters</a>
      */
-    public static String normalizeRequestParameters(HttpParameter[] params) {
+    static String normalizeRequestParameters(HttpParameter[] params) {
         return normalizeRequestParameters(toParamList(params));
     }
 
-    public static String normalizeRequestParameters(List<HttpParameter> params) {
+    static String normalizeRequestParameters(List<HttpParameter> params) {
         Collections.sort(params);
         return encodeParameters(params);
     }
 
-    public static String normalizeAuthorizationHeaders(List<HttpParameter> params) {
+    static String normalizeAuthorizationHeaders(List<HttpParameter> params) {
         Collections.sort(params);
         return encodeParameters(params);
     }
 
-    public static List<HttpParameter> toParamList(HttpParameter[] params) {
+    static List<HttpParameter> toParamList(HttpParameter[] params) {
         List<HttpParameter> paramList = new ArrayList<HttpParameter>(params.length);
         paramList.addAll(Arrays.asList(params));
         return paramList;
@@ -400,7 +407,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
     }
 
     public static String encodeParameters(List<HttpParameter> httpParams, String splitter, boolean quot) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for (HttpParameter param : httpParams) {
             if (!param.isFile()) {
                 if (buf.length() != 0) {
@@ -438,7 +445,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
      * @return the Signature Base String
      * @see <a href="http://oauth.net/core/1.0#rfc.section.9.1.2">OAuth Core - 9.1.2.  Construct Request URL</a>
      */
-    public static String constructRequestURL(String url) {
+    static String constructRequestURL(String url) {
         int index = url.indexOf("?");
         if (-1 != index) {
             url = url.substring(0, index);
@@ -461,10 +468,12 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
         return url;
     }
 
+    @Override
     public void setOAuthConsumer(String consumerKey, String consumerSecret) {
         this.consumerKey = consumerKey != null ? consumerKey : "";
         this.consumerSecret = consumerSecret != null ? consumerSecret : "";
     }
+
 
     @Override
     public boolean equals(Object o) {

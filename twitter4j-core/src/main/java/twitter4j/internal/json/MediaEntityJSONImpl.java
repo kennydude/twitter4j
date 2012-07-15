@@ -45,7 +45,7 @@ public class MediaEntityJSONImpl implements MediaEntity {
     private Map<Integer, MediaEntity.Size> sizes;
     private String type;
 
-    public MediaEntityJSONImpl(JSONObject json) throws TwitterException {
+    MediaEntityJSONImpl(JSONObject json) throws TwitterException {
         try {
             JSONArray indicesArray = json.getJSONArray("indices");
             this.start = indicesArray.getInt(0);
@@ -80,27 +80,35 @@ public class MediaEntityJSONImpl implements MediaEntity {
             }
             JSONObject sizes = json.getJSONObject("sizes");
             this.sizes = new HashMap<Integer, MediaEntity.Size>(4);
-            this.sizes.put(MediaEntity.Size.LARGE, new Size(sizes.getJSONObject("large")));
-            this.sizes.put(MediaEntity.Size.MEDIUM, new Size(sizes.getJSONObject("medium")));
-            this.sizes.put(MediaEntity.Size.SMALL, new Size(sizes.getJSONObject("small")));
-            this.sizes.put(MediaEntity.Size.THUMB, new Size(sizes.getJSONObject("thumb")));
+            // thumbworkarounding API side issue
+            addMediaEntitySizeIfNotNull(this.sizes, sizes, MediaEntity.Size.LARGE, "large");
+            addMediaEntitySizeIfNotNull(this.sizes, sizes, MediaEntity.Size.MEDIUM, "medium");
+            addMediaEntitySizeIfNotNull(this.sizes, sizes, MediaEntity.Size.SMALL, "small");
+            addMediaEntitySizeIfNotNull(this.sizes, sizes, MediaEntity.Size.THUMB, "thumb");
             if (!json.isNull("type")) {
                 this.type = json.getString("type");
             }
         } catch (JSONException jsone) {
             throw new TwitterException(jsone);
         }
-
     }
-    
+
+    private void addMediaEntitySizeIfNotNull(Map<Integer, MediaEntity.Size> sizes, JSONObject sizes_json, Integer size, String key) throws JSONException {
+        JSONObject size_json = sizes_json.optJSONObject(key);
+        if (size_json != null) {
+            sizes.put(size, new Size(size_json));
+        }
+    }
+
     /* For serialization purposes only. */
     /* package */ MediaEntityJSONImpl() {
-    	
+
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public long getId() {
         return id;
     }
@@ -108,6 +116,7 @@ public class MediaEntityJSONImpl implements MediaEntity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public URL getMediaURL() {
         return mediaURL;
     }
@@ -115,6 +124,7 @@ public class MediaEntityJSONImpl implements MediaEntity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public URL getMediaURLHttps() {
         return mediaURLHttps;
     }
@@ -122,6 +132,7 @@ public class MediaEntityJSONImpl implements MediaEntity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public URL getURL() {
         return url;
     }
@@ -129,6 +140,7 @@ public class MediaEntityJSONImpl implements MediaEntity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getDisplayURL() {
         return displayURL;
     }
@@ -136,10 +148,12 @@ public class MediaEntityJSONImpl implements MediaEntity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public URL getExpandedURL() {
         return expandedURL;
     }
 
+    @Override
     public Map<Integer, MediaEntity.Size> getSizes() {
         return sizes;
     }
@@ -147,6 +161,7 @@ public class MediaEntityJSONImpl implements MediaEntity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getType() {
         return type;
     }
@@ -154,6 +169,7 @@ public class MediaEntityJSONImpl implements MediaEntity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int getStart() {
         return start;
     }
@@ -161,6 +177,7 @@ public class MediaEntityJSONImpl implements MediaEntity {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int getEnd() {
         return end;
     }
@@ -177,14 +194,17 @@ public class MediaEntityJSONImpl implements MediaEntity {
             resize = "fit".equals(json.getString("resize")) ? MediaEntity.Size.FIT : MediaEntity.Size.CROP;
         }
 
+        @Override
         public int getWidth() {
             return width;
         }
 
+        @Override
         public int getHeight() {
             return height;
         }
 
+        @Override
         public int getResize() {
             return resize;
         }
