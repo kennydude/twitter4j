@@ -37,7 +37,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
  *
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-/*package*/ final class DirectMessageJSONImpl extends TwitterResponseImpl implements DirectMessage, java.io.Serializable {
+public final class DirectMessageJSONImpl extends TwitterResponseImpl implements DirectMessage, java.io.Serializable {
     private static final long serialVersionUID = -7104233663827757577L;
     private long id;
     private String text;
@@ -58,7 +58,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
         }
     }
 
-    /*package*/DirectMessageJSONImpl(JSONObject json) throws TwitterException {
+    public DirectMessageJSONImpl(JSONObject json) throws TwitterException {
         init(json);
     }
 

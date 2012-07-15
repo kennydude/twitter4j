@@ -37,7 +37,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
  *
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-/*package*/ final class StatusJSONImpl extends TwitterResponseImpl implements Status, java.io.Serializable {
+public final class StatusJSONImpl extends TwitterResponseImpl implements Status, java.io.Serializable {
     private static final Logger logger = Logger.getLogger(StatusJSONImpl.class);
     private static final long serialVersionUID = 7548618898682727465L;
 
@@ -66,7 +66,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
     private MediaEntity[] mediaEntities;
     private Status myRetweetedStatus;
 
-    /*package*/StatusJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
+    public StatusJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
         super(res);
         JSONObject json = res.asJSONObject();
         init(json);
@@ -76,7 +76,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
         }
     }
 
-    /*package*/ StatusJSONImpl(JSONObject json) throws TwitterException {
+    public StatusJSONImpl(JSONObject json) throws TwitterException {
         super();
         init(json);
     }
