@@ -111,6 +111,13 @@ public interface Status extends Comparable<Status>, TwitterResponse,
      * @since Twitter4J 1.0.4
      */
     boolean isFavorited();
+    
+    /**
+     * Set whether or not a Status is favorited.
+     *
+     * @since Twitter4J 3.0.0
+     */
+    void setIsFavorited(boolean favorited);
 
     /**
      * Return the user associated with the status.<br>
