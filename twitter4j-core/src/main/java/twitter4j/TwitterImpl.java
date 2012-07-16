@@ -188,6 +188,19 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
      * {@inheritDoc}
      */
     @Override
+    public ResponseList<Status> getUserMediaTimeline(String screenName, Paging paging)
+            throws TwitterException {
+        return factory.createStatusList(get(conf.getRestBaseURL()
+                + "statuses/media_timeline.json",
+                mergeParameters(new HttpParameter[]{new HttpParameter("screen_name", screenName)
+                        , INCLUDE_MY_RETWEET}
+                        , paging.asPostParameterArray())));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public ResponseList<Status> getUserTimeline(long userId, Paging paging)
             throws TwitterException {
         return factory.createStatusList(get(conf.getRestBaseURL()
