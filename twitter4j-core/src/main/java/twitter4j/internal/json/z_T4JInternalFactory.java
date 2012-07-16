@@ -19,7 +19,7 @@ package twitter4j.internal.json;
 import twitter4j.*;
 import twitter4j.api.HelpMethods;
 import twitter4j.internal.http.HttpResponse;
-import twitter4j.internal.org.json.JSONObject;
+import org.json.JSONObject;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com

@@ -20,8 +20,8 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterResponse;
 import twitter4j.internal.http.HTMLEntity;
 import twitter4j.internal.http.HttpResponse;
-import twitter4j.internal.org.json.JSONException;
-import twitter4j.internal.org.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

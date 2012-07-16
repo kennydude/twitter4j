@@ -17,7 +17,7 @@
 package twitter4j.internal.json;
 
 import twitter4j.Trend;
-import twitter4j.internal.org.json.JSONObject;
+import org.json.JSONObject;
 
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 

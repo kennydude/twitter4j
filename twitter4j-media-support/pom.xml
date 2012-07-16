@@ -94,7 +94,7 @@
             <archive>http://groups.google.com/group/twitter4j</archive>
         </mailingList>
     </mailingLists>
-    <dependencies>
+    <dependencies><dependency><groupId>org.json</groupId><artifactId>json</artifactId><version>20090211</version><scope>provided</scope></dependency>
         <dependency>
             <groupId>org.twitter4j</groupId>
             <artifactId>twitter4j-core</artifactId>
