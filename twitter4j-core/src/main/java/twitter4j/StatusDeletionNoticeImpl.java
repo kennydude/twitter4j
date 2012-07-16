@@ -16,7 +16,7 @@
 
 package twitter4j;
 
-import twitter4j.internal.org.json.JSONObject;
+import org.json.JSONObject;
 import twitter4j.internal.util.z_T4JInternalParseUtil;
 
 /**

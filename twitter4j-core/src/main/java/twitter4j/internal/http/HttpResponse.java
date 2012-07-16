@@ -19,10 +19,10 @@ package twitter4j.internal.http;
 import twitter4j.TwitterException;
 import twitter4j.conf.ConfigurationContext;
 import twitter4j.internal.logging.Logger;
-import twitter4j.internal.org.json.JSONArray;
-import twitter4j.internal.org.json.JSONException;
-import twitter4j.internal.org.json.JSONObject;
-import twitter4j.internal.org.json.JSONTokener;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.*;
 import java.util.List;
@@ -137,8 +137,8 @@ public abstract class HttpResponse {
             Reader reader = null;
             try {
                 if (responseAsString == null) {
-                    reader = asReader();
-                    json = new JSONObject(new JSONTokener(reader));
+                    //reader = asReader();
+                    json = new JSONObject(asString());
                 } else {
                     json = new JSONObject(responseAsString);
                 }
@@ -181,8 +181,8 @@ public abstract class HttpResponse {
             Reader reader = null;
             try {
                 if (responseAsString == null) {
-                    reader = asReader();
-                    jsonArray = new JSONArray(new JSONTokener(reader));
+                    //reader = asReader();
+                    jsonArray = new JSONArray(asString());
                 } else {
                     jsonArray = new JSONArray(responseAsString);
                 }
