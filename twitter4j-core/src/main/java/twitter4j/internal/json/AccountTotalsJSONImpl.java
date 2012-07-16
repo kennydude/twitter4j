@@ -20,7 +20,7 @@ import twitter4j.AccountTotals;
 import twitter4j.TwitterException;
 import twitter4j.conf.Configuration;
 import twitter4j.internal.http.HttpResponse;
-import twitter4j.internal.org.json.JSONObject;
+import org.json.JSONObject;
 
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
 

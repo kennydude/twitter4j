@@ -19,11 +19,11 @@ build(){
 		rm -Rf twitter4j-build/twitter4j-$1/src/main/java/twitter4j/internal/org
 		sed -i "" -e 's/reader = asReader();/\/\/reader = asReader();/' twitter4j-build/twitter4j-$1/src/main/java/twitter4j/internal/http/HttpResponse.java
 		sed -i "" -e 's/new JSONTokener(reader)/asString()/' twitter4j-build/twitter4j-$1/src/main/java/twitter4j/internal/http/HttpResponse.java
-		sed -i "" -e 's/import twitter4j.internal.org.json.JSONTokener;/\/\/import twitter4j.internal.org.json.JSONTokener;/' twitter4j-build/twitter4j-$1/src/main/java/twitter4j/internal/http/HttpResponse.java
+		sed -i "" -e 's/import org.json.JSONTokener;/\/\/import twitter4j.internal.org.json.JSONTokener;/' twitter4j-build/twitter4j-$1/src/main/java/twitter4j/internal/http/HttpResponse.java
 	fi
 	
 	cd twitter4j-build/twitter4j-$1
-	find . -type f |while read file; do sed -e 's/import twitter4j.internal.org.json/import org.json/' $file > $file.tmp && mv $file.tmp $file; done
+	find . -type f |while read file; do sed -e 's/import org.json/import org.json/' $file > $file.tmp && mv $file.tmp $file; done
 	sed -i "" -e 's/<dependencies>/<dependencies><dependency><groupId>org.json<\/groupId><artifactId>json<\/artifactId><version>20090211<\/version><scope>provided<\/scope><\/dependency>/' pom.xml
 	
 	echo "Building $1..."
