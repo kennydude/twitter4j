@@ -47,6 +47,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.*;
     private String url;
     private boolean isProtected;
     private int followersCount;
+    private boolean isFollowing;
 
     private Status status;
 
@@ -246,6 +247,22 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.*;
     @Override
     public int getFollowersCount() {
         return followersCount;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isFollowing() {
+    	return isFollowing;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setIsFollowing(boolean following) {
+    	isFollowing = following;
     }
 
     /**

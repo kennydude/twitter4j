@@ -188,4 +188,19 @@ public interface User extends Comparable<User>, TwitterResponse, java.io.Seriali
      * @since Twitter4J 2.1.4
      */
     boolean isFollowRequestSent();
+    
+    /**
+     * Returns true if setIsFollowing(true) was called; in Boid, it's used with the contextual action bar.
+     *
+     * @return true if setIsFollowing(true) was called.
+     * @since Twitter4J 3.0.0
+     */
+    boolean isFollowing();
+    
+    /**
+     * Sets whether or not the user is followed by the authenticating user; in Boid, it's used with the contextual action bar.
+     *
+     * @since Twitter4J 3.0.0
+     */
+    void setIsFollowing(boolean following);
 }
