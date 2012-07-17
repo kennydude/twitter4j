@@ -18,6 +18,7 @@ package twitter4j;
 
 import java.net.URL;
 import java.util.Date;
+import twitter4j.internal.json.FollowingType;
 
 /**
  * A data interface representing Basic user information element
@@ -184,8 +185,21 @@ public interface User extends Comparable<User>, TwitterResponse, java.io.Seriali
      * Returns true if the authenticating user has requested to follow this user,
      * otherwise false.
      *
-     * @return true if the authenticating user has requested to follow this user.
      * @since Twitter4J 2.1.4
      */
     boolean isFollowRequestSent();
+    
+    /**
+     * Returns true if setIsFollowing(true) was called; in Boid, it's used with the contextual action bar.
+     *
+     * @since Twitter4J 3.0.0
+     */
+    FollowingType isFollowing();
+    
+    /**
+     * Sets whether or not the user is followed by the authenticating user; in Boid, it's used with the contextual action bar.
+     *
+     * @since Twitter4J 3.0.0
+     */
+    void setIsFollowing(FollowingType following);
 }

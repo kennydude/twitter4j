@@ -34,7 +34,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.*;
  *
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-/*package*/ final class UserJSONImpl extends TwitterResponseImpl implements User, java.io.Serializable {
+public final class UserJSONImpl extends TwitterResponseImpl implements User, java.io.Serializable {
 
     private long id;
     private String name;
@@ -47,6 +47,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.*;
     private String url;
     private boolean isProtected;
     private int followersCount;
+    private FollowingType isFollowing;
 
     private Status status;
 
@@ -73,7 +74,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.*;
     private int listedCount;
     private boolean isFollowRequestSent;
     private static final long serialVersionUID = -6345893237975349030L;
-
+    
     /*package*/UserJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
         super(res);
         if (conf.isJSONStoreEnabled()) {
@@ -110,6 +111,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.*;
             isProtected = getBoolean("protected", json);
             isGeoEnabled = getBoolean("geo_enabled", json);
             isVerified = getBoolean("verified", json);
+            isFollowing = FollowingType.UNKNOWN;
             translator = getBoolean("is_translator", json);
             followersCount = getInt("followers_count", json);
 
@@ -246,6 +248,22 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.*;
     @Override
     public int getFollowersCount() {
         return followersCount;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public FollowingType isFollowing() {
+    	return isFollowing;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setIsFollowing(FollowingType following) {
+    	isFollowing = following;
     }
 
     /**
